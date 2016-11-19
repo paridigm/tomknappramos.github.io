@@ -18,6 +18,10 @@
       circle = new createjs.Shape();
       circle2 = new createjs.Shape();
 
+	  //touch support (to try to remove lag)
+	  console.log( createjs.Touch.isSupported() );
+	  createjs.Touch.enable(stage);
+	  
       var body = document.body;
       body.style.backgroundColor = 'black';
       body.style.padding = 0;
@@ -27,6 +31,14 @@
       stage.canvas.style.width='100%';  // can do same for height
       stage.canvas.style.backgroundColor = 'white';
 
+	  circle.onPress = function(evt) {
+		  console.log("the canvas was clicked at "+evt.stageX+","+evt.stageY);
+          circle.x = 0;
+          circle.y = 400;
+          circle2.x = 0;
+          circle2.y = 0;
+	  };
+	  
       // reset on tap
       stage.on("stagemousedown", function(evt) {
           console.log("the canvas was clicked at "+evt.stageX+","+evt.stageY);
@@ -34,8 +46,8 @@
           circle.y = 400;
           circle2.x = 0;
           circle2.y = 0;
-      })
-
+      });
+	  
       circle.graphics.beginFill("Red").drawCircle(0, 0, 50);
       circle.x = 100;
       circle.y = 100;
