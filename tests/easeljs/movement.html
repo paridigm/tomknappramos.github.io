@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+  <head>
+
+    <title>Sloots</title>
+
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <script>
+
+    var stage;
+    var circle;
+    var circle2;
+
+    function init() {
+      stage = new createjs.Stage("canvas");
+      circle = new createjs.Shape();
+      circle2 = new createjs.Shape();
+
+      // remove side padding
+      var body = document.body;
+      body.style.backgroundColor = 'black';
+      body.style.padding = 0;
+      body.style.margin = 0;
+
+      // change resolution via scaling
+      stage.canvas.style.width='50%';  // can do same for height
+      stage.canvas.style.backgroundColor = 'white';
+
+      // reset on tap
+      stage.on("stagemousedown", function(evt) {
+          console.log("the canvas was clicked at "+evt.stageX+","+evt.stageY);
+          circle.x = 0;
+          circle.y = 400;
+          circle2.x = 0;
+          circle2.y = 0;
+      })
+
+      circle.graphics.beginFill("Red").drawCircle(0, 0, 50);
+      circle.x = 100;
+      circle.y = 100;
+      stage.addChild(circle);
+
+      circle2.graphics.beginFill("Blue").drawCircle(0, 0, 50);
+      circle2.x = 100;
+      circle2.y = 100;
+      stage.addChild(circle2);
+
+      createjs.Ticker.setFPS(30);
+      createjs.Ticker.addEventListener("tick", update);
+
+      if(typeof resize != 'undefined') { resize(); }
+
+    }
+
+    function update() {
+      circle.x += 10;
+
+      circle2.x += 10;
+      circle2.y += 10;
+
+      stage.update();
+    }
+
+    /*
+    // fullscreen resize capability (only scales canvas size)
+    function resize() {
+      stage.canvas.width = window.innerWidth;
+      stage.canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize, false);
+    */
+
+    </script>
+
+  </head>
+
+  <body onload="init();" >
+    <canvas id="canvas" width="1000" height="563"></canvas>
+  </body>
+
+
+</html>
